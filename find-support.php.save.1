@@ -1,0 +1,35 @@
+<?php
+header('Content-Type:text/plain;charset=utf-8');
+$city = $_POST['text'];
+$mysql_conf = array(
+    'host'    => 'localhost', 
+    'db'      => 'mendingminds', 
+    'db_user' => 'webuser', 
+    'db_pwd'  => '1z2s3E4R', 
+    );
+$mysqli = @new mysqli($mysql_conf['host'], $mysql_conf['db_user'], $mysql_conf['db_pwd']);
+if ($mysqli->connect_errno) {
+    die("could not connect to the database:\n" . $mysqli->connect_error);
+}
+$select_db = $mysqli->select_db($mysql_conf['db']);
+if (!$select_db) {
+    die("could not connect to the db:\n" .  $mysqli->error);
+}
+$stmt  = $mysqli->prepare("select * from clinic_info where clinic_city= ?");
+$stmt->bind_param("s", $_POST['text']);
+$stmt->execute();
+$result = $stme->get_result();
+if($result->num_rows === 0) exit('No rows');
+//$sql = "select * from clinic_info where clinic_city='".$city."';";
+//$res = $mysqli->query($sql);
+//if (!$res) {
+//    die("sql error:\n" . $mysqli->error);
+//}
+ while ($row = $result->fetch_array()) {
+//        echo "id:".$row['clinic_id'].",name:".$row['clinic_name'].",street:".$row['clinic_street'].",latitude:".$row['clinic_lat'].",logitude:".$row['clinic_lon'].",phone:".$row['clinic_phone'].",description:".$row['clinic_description'].",city:".$row['clinic_city']; 
+          $str = array
+();  
+}
+$res->free();
+$mysqli->close();
+?>
