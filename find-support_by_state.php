@@ -1,11 +1,11 @@
 <?php
 header('Content-Type:text/json;charset=utf-8');
-$city = '%'.$_POST['text'].'%';
+$city = $_POST['text'];
 $mysql_conf = array(
-    'host'    => 'localhost', 
-    'db'      => 'mendingminds', 
-    'db_user' => 'webuser', 
-    'db_pwd'  => '1z2s3E4R', 
+    'host'    => 'localhost',
+    'db'      => 'mendingminds',
+    'db_user' => 'webuser',
+    'db_pwd'  => '1z2s3E4R',
     );
 $mysqli = @new mysqli($mysql_conf['host'], $mysql_conf['db_user'], $mysql_conf['db_pwd']);
 if ($mysqli->connect_errno) {
@@ -15,8 +15,8 @@ $select_db = $mysqli->select_db($mysql_conf['db']);
 if (!$select_db) {
     die("could not connect to the db:\n" .  $mysqli->error);
 }
-$stmt = $mysqli->prepare("SELECT * FROM clinic_info WHERE clinic_street like ? or clinic_name like ? or clinic_state like ?");
-$stmt->bind_param("sss", $city, $city, $city);
+$stmt = $mysqli->prepare("SELECT * FROM clinic_info WHERE clinic_state = ?");
+$stmt->bind_param("s", $city);
 $stmt->execute();
 $result = $stmt->get_result();
 if($result->num_rows === 0) exit('No rows');
@@ -36,16 +36,6 @@ class Clinic{
 };
 $response = array();
  while ($row = $result->fetch_array()) {
-//        echo "id:".$row['clinic_id'].",name:".$row['clinic_name'].",street:".$row['clinic_street'].",latitude:".$row['clinic_lat'].",logitude:".$row['clinic_lon'].",phone:".$row['clinic_phone'].",description:".$row['clinic_description'].",city:".$row['clinic_city']; 
-/*
-          $str = array();
-          $str[] = 
-                 "clinic".i=>array(
-                                   "id"=>$row['clinic_id'],
-                                   "name"=>$row['clinic_name']
-                                  )
-                  ;
-*/
           $clinic = new Clinic();
           $clinic->id = $row['clinic_id'];
           $clinic->organization = $row['clinic_organization'];
@@ -66,3 +56,4 @@ echo $jsonobj;
 $result->free();
 $mysqli->close();
 ?>
+
