@@ -1,6 +1,6 @@
 <?php
 header('Content-Type:text/json;charset=utf-8');
-$type= $_POST['text'];
+$type= $_GET['text'];
 $mysql_conf = array(
     'host'    => 'localhost',
     'db'      => 'mendingminds',
@@ -15,8 +15,7 @@ $select_db = $mysqli->select_db($mysql_conf['db']);
 if (!$select_db) {
     die("could not connect to the db:\n" .  $mysqli->error);
 }
-$stmt = $mysqli->prepare("SELECT * FROM app_info WHERE app_type1 = ?");
-$stmt->bind_param("s", $type);
+$stmt = $mysqli->prepare("SELECT * FROM app_info");
 $stmt->execute();
 $result = $stmt->get_result();
 if($result->num_rows === 0) exit('No rows');
