@@ -1,2 +1,3 @@
-# mendingminds-3
-# mendingminds-3
+This is final code base for mending minds. We added several features to the existing source code. Some of the features includes:
+    1. Maps : User can enter the location to find out the clinics or public mental health coommunity. This will list down all the clinics and user can enter the radius of search. There is a filter where user can filter based on the state.
+    2. App Recommendation : This feature will help the user to find out the apps which might help to recover from the mental health problems. We have collected the well known apps for both android and ios user. User can filter the apps based on his area of interest and also the mobile platfoem as well.
